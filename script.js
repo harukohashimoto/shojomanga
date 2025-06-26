@@ -72,12 +72,11 @@ class MangaApp {
 
     updateBackground() {
         const background = this.getRandomItem(mangaData.backgrounds);
-        const svgDataUrl = `data:image/svg+xml,${encodeURIComponent(background.svg)}`;
         
         this.backgroundElement.style.opacity = '0';
         
         setTimeout(() => {
-            this.backgroundElement.style.backgroundImage = `url("${svgDataUrl}")`;
+            this.backgroundElement.style.backgroundImage = `url("${background.image}")`;
             this.backgroundElement.style.opacity = '1';
             this.applyImageEffect();
         }, 250);

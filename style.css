@@ -41,7 +41,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600"><rect width="400" height="600" fill="%23ffb3ba"/><circle cx="200" cy="200" r="80" fill="%23ffdfed"/><ellipse cx="180" cy="180" rx="15" ry="20" fill="%23333"/><ellipse cx="220" cy="180" rx="15" ry="20" fill="%23333"/><path d="M 180 220 Q 200 240 220 220" stroke="%23ff69b4" stroke-width="3" fill="none"/></svg>');
+    background-image: url('images/1644635.png');
 }
 
 #speech-bubble {
