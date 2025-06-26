@@ -160,10 +160,9 @@ function setupModeToggle() {
         tapInstruction.style.display = 'none';
         gameEngine.setGameActive(true);
         
-        // Start first game
-        setTimeout(() => {
-            gameEngine.startNewGame();
-        }, 500);
+        // Show level selection instead of starting game directly
+        document.getElementById('level-selection').style.display = 'block';
+        document.getElementById('game-play').style.display = 'none';
     }
 }
 

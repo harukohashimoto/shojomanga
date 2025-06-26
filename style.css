@@ -303,3 +303,202 @@ body {
         font-size: 20px;
     }
 }
+
+/* Level Selection Styles */
+#level-selection {
+    text-align: center;
+    padding: 20px;
+}
+
+#level-selection h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+#level-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.level-btn {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 3px solid #dee2e6;
+    padding: 15px 20px;
+    border-radius: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #495057;
+    line-height: 1.4;
+}
+
+.level-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.level-btn.active {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    border-color: #ff1493;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+.level-btn small {
+    display: block;
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+#start-game {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+#start-game:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+/* Game Play Area */
+#game-play {
+    position: relative;
+}
+
+#current-level-display {
+    background: rgba(255, 105, 180, 0.1);
+    border: 2px solid #ff69b4;
+    border-radius: 10px;
+    padding: 8px 15px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #ff1493;
+    text-align: center;
+    font-size: 14px;
+}
+
+#review-speech {
+    background: linear-gradient(45deg, #6c757d, #495057);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0 3px 10px rgba(108, 117, 125, 0.3);
+    transition: all 0.3s ease;
+}
+
+#review-speech:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+}
+
+#manual-answer {
+    background: linear-gradient(45deg, #17a2b8, #138496);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0 4px 15px rgba(23, 162, 184, 0.3);
+    transition: all 0.3s ease;
+}
+
+#manual-answer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(23, 162, 184, 0.4);
+}
+
+#auto-timer {
+    background: rgba(255, 193, 7, 0.1);
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+}
+
+#time-remaining {
+    font-weight: bold;
+    color: #856404;
+    font-size: 16px;
+}
+
+#countdown {
+    color: #dc3545;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#back-to-levels {
+    background: linear-gradient(45deg, #6c757d, #495057);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 10px;
+    box-shadow: 0 3px 10px rgba(108, 117, 125, 0.3);
+    transition: all 0.3s ease;
+}
+
+#back-to-levels:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* Mobile Responsive for Level Selection */
+@media (max-width: 768px) {
+    #level-selection h3 {
+        font-size: 18px;
+    }
+    
+    .level-btn {
+        font-size: 14px;
+        padding: 12px 15px;
+    }
+    
+    #start-game {
+        font-size: 16px;
+        padding: 12px 25px;
+    }
+    
+    #current-level-display {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    #level-buttons {
+        gap: 10px;
+    }
+    
+    .level-btn {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+    
+    .level-btn small {
+        font-size: 11px;
+    }
+}
