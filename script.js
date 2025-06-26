@@ -147,6 +147,9 @@ function setupModeToggle() {
         tapInstruction.style.display = 'block';
         gameEngine.setGameActive(false);
         
+        // ゲームモード用のCSSクラスを削除
+        document.body.classList.remove('game-mode');
+        
         // Reset speech bubble for story mode
         const speechText = document.getElementById('speech-text');
         speechText.style.opacity = '1';
@@ -159,6 +162,9 @@ function setupModeToggle() {
         gameUI.style.display = 'block';
         tapInstruction.style.display = 'none';
         gameEngine.setGameActive(true);
+        
+        // ゲームモード用のCSSクラスを追加
+        document.body.classList.add('game-mode');
         
         // Show level selection instead of starting game directly
         document.getElementById('level-selection').style.display = 'block';

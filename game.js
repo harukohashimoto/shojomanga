@@ -109,16 +109,8 @@ class ReverseGameEngine {
     }
 
     generateRandomSpeech() {
-        const template = this.getRandomItem(mangaData.dialogTemplates);
-        let speech = template.template;
-        
-        for (const [key, values] of Object.entries(template.variables)) {
-            const placeholder = `{${key}}`;
-            const randomValue = this.getRandomItem(values);
-            speech = speech.replace(placeholder, randomValue);
-        }
-        
-        return speech;
+        const levelData = gameData[this.currentLevel];
+        return this.getRandomItem(levelData);
     }
 
     getRandomItem(array) {
@@ -126,8 +118,39 @@ class ReverseGameEngine {
     }
 
     reverseText(text) {
-        const cleaned = text.replace(/[、。？！]/g, '');
-        return cleaned.split('').reverse().join('');
+        // すでにひらがなの場合はそのまま逆順にする
+        return text.split('').reverse().join('');
+    }
+
+    // カタカナをひらがなに変換する関数
+    katakanaToHiragana(str) {
+        return str.replace(/[\u30A1-\u30F6]/g, function(match) {
+            const chr = match.charCodeAt(0) - 0x60;
+            return String.fromCharCode(chr);
+        });
+    }
+
+    // 漢字をひらがなに変換する関数（簡易版）
+    convertToHiragana(text) {
+        // 一般的な漢字→ひらがな変換マップ
+        const kanjiMap = {
+            '今日': 'きょう', '素敵': 'すてき', '美しい': 'うつくしい', '可愛い': 'かわいい',
+            '嬉しい': 'うれしい', '楽しい': 'たのしい', '幸せ': 'しあわせ', '大好き': 'だいすき',
+            '優しい': 'やさしい', '綺麗': 'きれい', '時間': 'じかん', '瞬間': 'しゅんかん',
+            '思い出': 'おもいで', '出会い': 'であい', '恋': 'こい', '友情': 'ゆうじょう',
+            '学校': 'がっこう', '先輩': 'せんぱい', '皆': 'みんな', '今': 'いま',
+            '魔法': 'まほう', '気分': 'きぶん', '予感': 'よかん', '胸': 'むね',
+            '涙': 'なみだ', '寝': 'ね', '君': 'きみ', '人': 'ひと', '心': 'こころ',
+            '愛': 'あい', '夢': 'ゆめ', '希望': 'きぼう', '笑顔': 'えがお',
+            '天使': 'てんし', '星': 'ほし', '花': 'はな', '空': 'そら',
+            '海': 'うみ', '太陽': 'たいよう', '月': 'つき', '光': 'ひかり'
+        };
+
+        let result = text;
+        for (const [kanji, hiragana] of Object.entries(kanjiMap)) {
+            result = result.replace(new RegExp(kanji, 'g'), hiragana);
+        }
+        return result;
     }
 
     displaySpeech(speech) {
@@ -192,11 +215,8 @@ class ReverseGameEngine {
     compareTexts(recognized, target) {
         const normalizeText = (text) => {
             return text
-                .replace(/[、。？！\s]/g, '')
-                .toLowerCase()
-                .replace(/[ぁ-ん]/g, (match) => {
-                    return String.fromCharCode(match.charCodeAt(0) + 0x60);
-                });
+                .replace(/[、。？！\s]/g, '')  // 句読点と空白を除去
+                .toLowerCase();
         };
 
         const normalizedRecognized = normalizeText(recognized);
@@ -208,7 +228,15 @@ class ReverseGameEngine {
         const similarity = this.calculateSimilarity(normalizedRecognized, normalizedTarget);
         console.log('類似度:', similarity);
         
-        return similarity >= 0.7;
+        // レベルに応じて判定の厳しさを調整
+        let threshold = 0.7;
+        if (this.currentLevel === 'beginner') {
+            threshold = 0.6;  // 初心者は甘めに判定
+        } else if (this.currentLevel === 'advanced') {
+            threshold = 0.8;  // 上級者は厳しめに判定
+        }
+        
+        return similarity >= threshold;
     }
 
     calculateSimilarity(str1, str2) {
@@ -445,6 +473,12 @@ class ReverseGameEngine {
         console.log('認識結果:', result);
         console.log('正解:', this.reversedTarget);
         
+        // 音声認識結果をひらがなに変換
+        let hiraganaResult = this.convertToHiragana(result);
+        hiraganaResult = this.katakanaToHiragana(hiraganaResult);
+        
+        console.log('ひらがな変換後:', hiraganaResult);
+        
         // Stop response timer if active
         if (this.responseTimer) {
             clearInterval(this.responseTimer);
@@ -453,8 +487,8 @@ class ReverseGameEngine {
         document.getElementById('auto-timer').style.display = 'none';
         this.waitingForResponse = false;
         
-        const isCorrect = this.compareTexts(result, this.reversedTarget);
-        this.showResult(isCorrect, result);
+        const isCorrect = this.compareTexts(hiraganaResult, this.reversedTarget);
+        this.showResult(isCorrect, hiraganaResult);
     }
 
     showResult(isCorrect, recognizedText) {

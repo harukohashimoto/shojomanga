@@ -54,6 +54,12 @@ body {
     height: auto;
     z-index: 10;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    transition: all 0.3s ease;
+}
+
+/* ゲームモード時の吹き出し位置調整 */
+.game-mode #speech-bubble {
+    bottom: 40%;
 }
 
 #bubble-path {
@@ -131,7 +137,7 @@ body {
 /* Game UI Styles */
 #game-ui {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
