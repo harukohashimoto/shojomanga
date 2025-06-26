@@ -63,7 +63,7 @@ body {
 }
 
 #speech-text {
-    font-size: 18px;
+    font-size: 27px;
     font-weight: bold;
     fill: #333;
     text-anchor: middle;
@@ -88,7 +88,7 @@ body {
 
 @media (max-width: 768px) {
     #speech-text {
-        font-size: 16px;
+        font-size: 24px;
     }
     
     #speech-bubble {
@@ -99,7 +99,7 @@ body {
 
 @media (max-width: 480px) {
     #speech-text {
-        font-size: 14px;
+        font-size: 21px;
     }
     
     #tap-instruction {
