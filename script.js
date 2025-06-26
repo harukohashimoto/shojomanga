@@ -116,9 +116,56 @@ class MangaApp {
     }
 }
 
+let mangaApp;
+let gameEngine;
+
 document.addEventListener('DOMContentLoaded', () => {
-    new MangaApp();
+    mangaApp = new MangaApp();
+    gameEngine = new ReverseGameEngine();
+    
+    setupModeToggle();
 });
+
+function setupModeToggle() {
+    const storyModeBtn = document.getElementById('story-mode');
+    const gameModeBtn = document.getElementById('game-mode');
+    const gameUI = document.getElementById('game-ui');
+    const tapInstruction = document.getElementById('tap-instruction');
+    
+    storyModeBtn.addEventListener('click', () => {
+        switchToStoryMode();
+    });
+    
+    gameModeBtn.addEventListener('click', () => {
+        switchToGameMode();
+    });
+    
+    function switchToStoryMode() {
+        storyModeBtn.classList.add('active');
+        gameModeBtn.classList.remove('active');
+        gameUI.style.display = 'none';
+        tapInstruction.style.display = 'block';
+        gameEngine.setGameActive(false);
+        
+        // Reset speech bubble for story mode
+        const speechText = document.getElementById('speech-text');
+        speechText.style.opacity = '1';
+        speechText.textContent = 'タップして始める';
+    }
+    
+    function switchToGameMode() {
+        gameModeBtn.classList.add('active');
+        storyModeBtn.classList.remove('active');
+        gameUI.style.display = 'block';
+        tapInstruction.style.display = 'none';
+        gameEngine.setGameActive(true);
+        
+        // Start first game
+        setTimeout(() => {
+            gameEngine.startNewGame();
+        }, 500);
+    }
+}
 
 document.addEventListener('contextmenu', (e) => e.preventDefault());
 document.addEventListener('selectstart', (e) => e.preventDefault());

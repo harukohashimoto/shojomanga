@@ -18,8 +18,25 @@
             </svg>
         </div>
         <div id="tap-instruction">タップして次へ</div>
+        
+        <!-- Game UI -->
+        <div id="game-ui" style="display: none;">
+            <div id="game-timer">3</div>
+            <div id="game-status">セリフを覚えてください</div>
+            <button id="start-recording" style="display: none;">🎤 逆さまに言ってみて！</button>
+            <div id="recording-indicator" style="display: none;">🎤 録音中...</div>
+            <div id="game-result" style="display: none;"></div>
+            <button id="next-game" style="display: none;">次のゲーム</button>
+        </div>
+        
+        <!-- Mode Toggle -->
+        <div id="mode-toggle">
+            <button id="story-mode" class="active">ストーリー</button>
+            <button id="game-mode">ゲーム</button>
+        </div>
     </div>
     <script src="data.js"></script>
+    <script src="game.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
