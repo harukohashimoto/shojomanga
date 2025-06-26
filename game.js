@@ -374,8 +374,7 @@ class ReverseGameEngine {
         document.getElementById('auto-timer').style.display = 'none';
         document.getElementById('review-speech').style.display = 'none';
         document.getElementById('game-result').style.display = 'none';
-        document.getElementById('next-game').style.display = 'none';
-        document.getElementById('back-to-levels').style.display = 'none';
+        document.getElementById('result-buttons').style.display = 'none';
     }
 
     startTimer() {
@@ -493,8 +492,7 @@ class ReverseGameEngine {
 
     showResult(isCorrect, recognizedText) {
         const resultElement = document.getElementById('game-result');
-        const nextButton = document.getElementById('next-game');
-        const backButton = document.getElementById('back-to-levels');
+        const resultButtons = document.getElementById('result-buttons');
         
         let resultHTML = `
             <div class="result-content ${isCorrect ? 'correct' : 'incorrect'}">
@@ -517,8 +515,7 @@ class ReverseGameEngine {
         
         resultElement.innerHTML = resultHTML;
         resultElement.style.display = 'block';
-        nextButton.style.display = 'block';
-        backButton.style.display = 'block';
+        resultButtons.style.display = 'flex';
         
         resultElement.classList.add('fade-in');
         this.playResultSound(isCorrect);
