@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>少女漫画Webアプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="manga-container">
+            <div id="background-image"></div>
+            <svg id="speech-bubble" viewBox="0 0 400 200">
+                <path id="bubble-path" d="" fill="white" stroke="#ff69b4" stroke-width="3"/>
+                <text id="speech-text" x="200" y="100" text-anchor="middle" dominant-baseline="middle">
+                    タップして始める
+                </text>
+            </svg>
+        </div>
+        <div id="tap-instruction">タップして次へ</div>
+    </div>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
