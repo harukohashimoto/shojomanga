@@ -59,7 +59,7 @@ body {
 
 /* ゲームモード時の吹き出し位置調整 */
 .game-mode #speech-bubble {
-    bottom: 40%;
+    bottom: 70%;
 }
 
 #bubble-path {
@@ -137,9 +137,9 @@ body {
 /* Game UI Styles */
 #game-ui {
     position: absolute;
-    top: 60%;
+    bottom: 5%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     text-align: center;
     z-index: 20;
     background: rgba(255, 255, 255, 0.95);
@@ -271,6 +271,7 @@ body {
     #game-ui {
         width: 95%;
         padding: 15px;
+        bottom: 2%;
     }
     
     #game-timer {
@@ -294,6 +295,10 @@ body {
     .result-details {
         font-size: 12px;
     }
+    
+    .game-mode #speech-bubble {
+        bottom: 75%;
+    }
 }
 
 @media (max-width: 480px) {
@@ -307,6 +312,15 @@ body {
     
     .result-title {
         font-size: 20px;
+    }
+    
+    .game-mode #speech-bubble {
+        bottom: 78%;
+    }
+    
+    #game-ui {
+        bottom: 1%;
+        padding: 12px;
     }
 }
 
