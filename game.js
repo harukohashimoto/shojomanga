@@ -36,8 +36,8 @@ class ReverseGameEngine {
         
         this.recognition.lang = 'ja-JP';
         this.recognition.continuous = false;
-        this.recognition.interimResults = false;
-        this.recognition.maxAlternatives = 1;
+        this.recognition.interimResults = true;
+        this.recognition.maxAlternatives = 5;
 
         this.recognition.onstart = () => {
             this.isRecording = true;
@@ -45,8 +45,25 @@ class ReverseGameEngine {
         };
 
         this.recognition.onresult = (event) => {
-            const result = event.results[0][0].transcript;
-            this.processRecognitionResult(result);
+            // 最終結果のみを処理
+            if (event.results[event.results.length - 1].isFinal) {
+                // 複数の候補から最適なものを選択
+                let bestResult = '';
+                let bestConfidence = 0;
+                
+                for (let i = 0; i < event.results[event.results.length - 1].length; i++) {
+                    const alternative = event.results[event.results.length - 1][i];
+                    console.log(`候補 ${i + 1}: "${alternative.transcript}" (信頼度: ${alternative.confidence})`);
+                    
+                    if (alternative.confidence > bestConfidence) {
+                        bestConfidence = alternative.confidence;
+                        bestResult = alternative.transcript;
+                    }
+                }
+                
+                console.log(`選択された結果: "${bestResult}" (信頼度: ${bestConfidence})`);
+                this.processRecognitionResult(bestResult);
+            }
         };
 
         this.recognition.onerror = (event) => {
@@ -399,6 +416,9 @@ class ReverseGameEngine {
         const normalizeText = (text) => {
             return text
                 .replace(/[、。？！\s]/g, '')  // 句読点と空白を除去
+                .replace(/[ァ-ヴ]/g, function(match) { // カタカナをひらがなに
+                    return String.fromCharCode(match.charCodeAt(0) - 0x60);
+                })
                 .toLowerCase();
         };
 
@@ -408,18 +428,32 @@ class ReverseGameEngine {
         console.log('正規化された認識結果:', normalizedRecognized);
         console.log('正規化された正解:', normalizedTarget);
         
+        // 完全一致の場合
+        if (normalizedRecognized === normalizedTarget) {
+            console.log('完全一致！');
+            return true;
+        }
+        
+        // 類似度計算
         const similarity = this.calculateSimilarity(normalizedRecognized, normalizedTarget);
         console.log('類似度:', similarity);
+        
+        // 音響的類似性も考慮（濁音・半濁音・長音の誤認識対応）
+        const phoneticSimilarity = this.calculatePhoneticSimilarity(normalizedRecognized, normalizedTarget);
+        console.log('音響類似度:', phoneticSimilarity);
+        
+        const finalSimilarity = Math.max(similarity, phoneticSimilarity);
+        console.log('最終類似度:', finalSimilarity);
         
         // レベルに応じて判定の厳しさを調整
         let threshold = 0.7;
         if (this.currentLevel === 'beginner') {
-            threshold = 0.6;  // 初心者は甘めに判定
+            threshold = 0.5;  // 初心者はより甘めに判定
         } else if (this.currentLevel === 'advanced') {
             threshold = 0.8;  // 上級者は厳しめに判定
         }
         
-        return similarity >= threshold;
+        return finalSimilarity >= threshold;
     }
 
     calculateSimilarity(str1, str2) {
@@ -458,6 +492,31 @@ class ReverseGameEngine {
         }
         
         return matrix[str2.length][str1.length];
+    }
+
+    calculatePhoneticSimilarity(str1, str2) {
+        // 音響的に類似した文字のマッピング
+        const phoneticMap = {
+            'が': 'か', 'ぎ': 'き', 'ぐ': 'く', 'げ': 'け', 'ご': 'こ',
+            'ざ': 'さ', 'じ': 'し', 'ず': 'す', 'ぜ': 'せ', 'ぞ': 'そ',
+            'だ': 'た', 'ぢ': 'ち', 'づ': 'つ', 'で': 'て', 'ど': 'と',
+            'ば': 'は', 'び': 'ひ', 'ぶ': 'ふ', 'べ': 'へ', 'ぼ': 'ほ',
+            'ぱ': 'は', 'ぴ': 'ひ', 'ぷ': 'ふ', 'ぺ': 'へ', 'ぽ': 'ほ',
+            'ー': '', 'っ': 'つ'
+        };
+        
+        const normalizePhonetic = (text) => {
+            let normalized = text;
+            for (const [voiced, voiceless] of Object.entries(phoneticMap)) {
+                normalized = normalized.replace(new RegExp(voiced, 'g'), voiceless);
+            }
+            return normalized;
+        };
+        
+        const phonetic1 = normalizePhonetic(str1);
+        const phonetic2 = normalizePhonetic(str2);
+        
+        return this.calculateSimilarity(phonetic1, phonetic2);
     }
 
     showResult(isCorrect, recognizedText) {
@@ -634,10 +693,19 @@ class ReverseGameEngine {
         console.log('認識結果:', result);
         console.log('正解:', this.reversedTarget);
         
+        // 前処理：不要な文字を除去
+        let cleanedResult = result
+            .replace(/[。、！？\s]/g, '') // 句読点と空白を除去
+            .replace(/[０-９]/g, function(s) { // 全角数字を半角に
+                return String.fromCharCode(s.charCodeAt(0) - 0xFEE0);
+            })
+            .toLowerCase();
+        
         // 音声認識結果をひらがなに変換
-        let hiraganaResult = this.convertToHiragana(result);
+        let hiraganaResult = this.convertToHiragana(cleanedResult);
         hiraganaResult = this.katakanaToHiragana(hiraganaResult);
         
+        console.log('前処理後:', cleanedResult);
         console.log('ひらがな変換後:', hiraganaResult);
         
         // Stop response timer if active
