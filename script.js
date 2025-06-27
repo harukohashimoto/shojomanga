@@ -38,7 +38,7 @@ class MangaApp {
     }
 
     createSpeechBubble() {
-        const bubblePath = "M 50 50 Q 50 20 80 20 L 320 20 Q 350 20 350 50 L 350 120 Q 350 150 320 150 L 150 150 L 120 180 L 140 150 L 80 150 Q 50 150 50 120 Z";
+        const bubblePath = "M 50 50 Q 50 20 80 20 L 370 20 Q 400 20 400 50 L 400 140 Q 400 170 370 170 L 150 170 L 120 200 L 140 170 L 80 170 Q 50 170 50 140 Z";
         this.bubblePath.setAttribute('d', bubblePath);
     }
 
@@ -98,18 +98,59 @@ class MangaApp {
         this.speechText.style.opacity = '0';
         
         setTimeout(() => {
-            const words = dialog.split('');
-            this.speechText.textContent = '';
+            // Clear previous content
+            this.speechText.innerHTML = '';
             this.speechText.style.opacity = '1';
             
-            this.typeWriter(words, 0);
+            // Split dialog into lines and create tspan elements
+            const lines = this.wrapText(dialog, 20); // Wrap at 20 characters
+            lines.forEach((line, index) => {
+                const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+                tspan.setAttribute('x', '80');
+                tspan.setAttribute('y', 50 + (index * 25));
+                this.speechText.appendChild(tspan);
+            });
+            
+            this.typeWriterMultiLine(lines, 0, 0);
         }, 200);
     }
+    
+    wrapText(text, maxLength) {
+        const lines = [];
+        let currentLine = '';
+        
+        for (let i = 0; i < text.length; i++) {
+            const char = text[i];
+            if (char === '\n') {
+                lines.push(currentLine);
+                currentLine = '';
+            } else if (currentLine.length >= maxLength && char === ' ') {
+                lines.push(currentLine);
+                currentLine = '';
+            } else {
+                currentLine += char;
+            }
+        }
+        
+        if (currentLine) {
+            lines.push(currentLine);
+        }
+        
+        return lines;
+    }
 
-    typeWriter(words, index) {
-        if (index < words.length) {
-            this.speechText.textContent += words[index];
-            setTimeout(() => this.typeWriter(words, index + 1), 50);
+    typeWriterMultiLine(lines, lineIndex, charIndex) {
+        if (lineIndex >= lines.length) return;
+        
+        const currentLine = lines[lineIndex];
+        const tspan = this.speechText.children[lineIndex];
+        
+        if (charIndex < currentLine.length) {
+            tspan.textContent += currentLine[charIndex];
+            setTimeout(() => this.typeWriterMultiLine(lines, lineIndex, charIndex + 1), 50);
+        } else {
+            // Move to next line
+            setTimeout(() => this.typeWriterMultiLine(lines, lineIndex + 1, 0), 100);
         }
     }
 

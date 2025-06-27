@@ -49,8 +49,8 @@ body {
     bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
-    width: 90%;
-    max-width: 350px;
+    width: 95%;
+    max-width: 450px;
     height: auto;
     z-index: 10;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
@@ -69,11 +69,13 @@ body {
 }
 
 #speech-text {
-    font-size: 27px;
+    font-size: 24px;
     font-weight: bold;
     fill: #333;
-    text-anchor: middle;
-    dominant-baseline: middle;
+    text-anchor: start;
+    dominant-baseline: text-before-edge;
+    x: 80;
+    y: 50;
 }
 
 #tap-instruction {
