@@ -525,3 +525,62 @@ body {
         font-size: 11px;
     }
 }
+
+/* Introduction Screen Styles */
+#introduction-screen {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 15;
+}
+
+#start-button {
+    background: linear-gradient(45deg, #ff69b4, #ff1493);
+    color: white;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 50px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+#start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 105, 180, 0.5);
+    background: linear-gradient(45deg, #ff1493, #ff69b4);
+}
+
+#start-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+}
+
+@media (max-width: 768px) {
+    #start-button {
+        font-size: 24px;
+        padding: 18px 35px;
+        min-width: 180px;
+    }
+    
+    #introduction-screen {
+        bottom: 12%;
+    }
+}
+
+@media (max-width: 480px) {
+    #start-button {
+        font-size: 22px;
+        padding: 16px 30px;
+        min-width: 160px;
+    }
+    
+    #introduction-screen {
+        bottom: 10%;
+    }
+}

@@ -2,6 +2,8 @@ class MangaApp {
     constructor() {
         this.currentIndex = 0;
         this.previousEffects = [];
+        this.introductionIndex = 0;
+        this.isIntroduction = true;
         this.init();
     }
 
@@ -14,14 +16,24 @@ class MangaApp {
         
         this.setupEventListeners();
         this.createSpeechBubble();
-        this.showNext();
+        this.startIntroduction();
     }
 
     setupEventListeners() {
-        this.container.addEventListener('click', () => this.showNext());
+        this.container.addEventListener('click', () => {
+            if (this.isIntroduction) {
+                this.showNextIntroduction();
+            } else {
+                this.showNext();
+            }
+        });
         this.container.addEventListener('touchend', (e) => {
             e.preventDefault();
-            this.showNext();
+            if (this.isIntroduction) {
+                this.showNextIntroduction();
+            } else {
+                this.showNext();
+            }
         });
     }
 
@@ -101,6 +113,29 @@ class MangaApp {
         }
     }
 
+    startIntroduction() {
+        this.updateBackground();
+        this.updateDialog(mangaData.introductionTexts[0]);
+        this.speechBubble.classList.add('fade-in');
+        setTimeout(() => {
+            this.speechBubble.classList.remove('fade-in');
+        }, 500);
+    }
+    
+    showNextIntroduction() {
+        this.introductionIndex++;
+        if (this.introductionIndex < mangaData.introductionTexts.length) {
+            this.updateBackground();
+            this.updateDialog(mangaData.introductionTexts[this.introductionIndex]);
+            this.speechBubble.classList.add('fade-in');
+            setTimeout(() => {
+                this.speechBubble.classList.remove('fade-in');
+            }, 500);
+        } else {
+            document.getElementById('start-button').style.display = 'block';
+        }
+    }
+
     showNext() {
         const dialog = this.generateDialog();
         
@@ -123,15 +158,26 @@ document.addEventListener('DOMContentLoaded', () => {
     mangaApp = new MangaApp();
     gameEngine = new ReverseGameEngine();
     
-    switchToGameMode();
+    setupStartButton();
 });
+
+function setupStartButton() {
+    const startButton = document.getElementById('start-button');
+    startButton.style.display = 'none';
+    
+    startButton.addEventListener('click', () => {
+        switchToGameMode();
+    });
+}
 
 function switchToGameMode() {
     const gameUI = document.getElementById('game-ui');
     const tapInstruction = document.getElementById('tap-instruction');
+    const introductionScreen = document.getElementById('introduction-screen');
     
     gameUI.style.display = 'block';
     tapInstruction.style.display = 'none';
+    introductionScreen.style.display = 'none';
     gameEngine.setGameActive(true);
     
     // ゲームモード用のCSSクラスを追加
