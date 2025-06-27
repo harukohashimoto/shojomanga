@@ -80,5 +80,16 @@ const mangaData = {
         "すぐ消えちゃうから…\nふふっ、油断は禁物よ♡",
         "そのあとは、スマホに\n向かって…\n逆さまに言ってみてね♪",
         "それじゃあ…\nはじめてみよっかっ！"
+    ],
+    
+    introductionBackgrounds: [
+        {
+            id: 1,
+            image: "images/top.png"
+        },
+        {
+            id: 2,
+            image: "images/top2.png"
+        }
     ]
 };

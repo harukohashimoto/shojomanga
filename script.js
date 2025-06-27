@@ -4,6 +4,7 @@ class MangaApp {
         this.previousEffects = [];
         this.introductionIndex = 0;
         this.isIntroduction = true;
+        this.selectedIntroBackground = null;
         this.init();
     }
 
@@ -82,6 +83,19 @@ class MangaApp {
         }, 100);
     }
 
+    setIntroductionBackground() {
+        if (!this.selectedIntroBackground) {
+            this.selectedIntroBackground = this.getRandomItem(mangaData.introductionBackgrounds);
+        }
+        
+        this.backgroundElement.style.opacity = '0';
+        
+        setTimeout(() => {
+            this.backgroundElement.style.backgroundImage = `url("${this.selectedIntroBackground.image}")`;
+            this.backgroundElement.style.opacity = '1';
+        }, 250);
+    }
+    
     updateBackground() {
         const background = this.getRandomItem(mangaData.backgrounds);
         
@@ -155,7 +169,7 @@ class MangaApp {
     }
 
     startIntroduction() {
-        this.updateBackground();
+        this.setIntroductionBackground();
         this.updateDialog(mangaData.introductionTexts[0]);
         this.speechBubble.classList.add('fade-in');
         setTimeout(() => {
@@ -166,7 +180,6 @@ class MangaApp {
     showNextIntroduction() {
         this.introductionIndex++;
         if (this.introductionIndex < mangaData.introductionTexts.length) {
-            this.updateBackground();
             this.updateDialog(mangaData.introductionTexts[this.introductionIndex]);
             this.speechBubble.classList.add('fade-in');
             setTimeout(() => {
