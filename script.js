@@ -215,10 +215,12 @@ function switchToGameMode() {
     const gameUI = document.getElementById('game-ui');
     const tapInstruction = document.getElementById('tap-instruction');
     const introductionScreen = document.getElementById('introduction-screen');
+    const appTitle = document.getElementById('app-title');
     
     gameUI.style.display = 'block';
     tapInstruction.style.display = 'none';
     introductionScreen.style.display = 'none';
+    appTitle.style.display = 'none';
     gameEngine.setGameActive(true);
     
     // ゲームモード用のCSSクラスを追加

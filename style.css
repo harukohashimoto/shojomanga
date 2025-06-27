@@ -586,3 +586,60 @@ body {
         bottom: 10%;
     }
 }
+
+/* App Title Styles */
+#app-title {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 48px;
+    font-weight: bold;
+    color: #ff1493;
+    text-shadow: 
+        3px 3px 0 #fff,
+        -1px -1px 0 #fff,
+        1px -1px 0 #fff,
+        -1px 1px 0 #fff,
+        1px 1px 0 #fff,
+        0 0 20px rgba(255, 20, 147, 0.5);
+    z-index: 20;
+    font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 
+            3px 3px 0 #fff,
+            -1px -1px 0 #fff,
+            1px -1px 0 #fff,
+            -1px 1px 0 #fff,
+            1px 1px 0 #fff,
+            0 0 20px rgba(255, 20, 147, 0.5);
+    }
+    to {
+        text-shadow: 
+            3px 3px 0 #fff,
+            -1px -1px 0 #fff,
+            1px -1px 0 #fff,
+            -1px 1px 0 #fff,
+            1px 1px 0 #fff,
+            0 0 30px rgba(255, 20, 147, 0.8),
+            0 0 40px rgba(255, 105, 180, 0.3);
+    }
+}
+
+@media (max-width: 768px) {
+    #app-title {
+        font-size: 40px;
+        top: 8%;
+    }
+}
+
+@media (max-width: 480px) {
+    #app-title {
+        font-size: 32px;
+        top: 6%;
+    }
+}
