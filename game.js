@@ -183,6 +183,7 @@ class ReverseGameEngine {
             timerElement.textContent = countdown;
             
             if (countdown <= 0) {
+                console.log('Timer countdown reached 0');
                 clearInterval(this.timer);
                 timerElement.style.display = 'none';
                 this.hideSpeech();
@@ -190,6 +191,7 @@ class ReverseGameEngine {
                 // Show recording interface automatically after a short delay
                 console.log('Timer ended, showing recording interface in 500ms');
                 setTimeout(() => {
+                    console.log('About to call showRecordingInterface');
                     this.showRecordingInterface();
                 }, 500);
             }
@@ -212,25 +214,36 @@ class ReverseGameEngine {
         const reviewSpeechButton = document.getElementById('review-speech');
         const autoTimer = document.getElementById('auto-timer');
         
+        console.log('Button elements found:', {
+            startRecording: !!startRecordingButton,
+            manualAnswer: !!manualAnswerButton,
+            reviewSpeech: !!reviewSpeechButton,
+            autoTimer: !!autoTimer
+        });
+        
         // Update game status
         document.getElementById('game-status').textContent = 'セリフを逆さまに言ってください！';
         
         // Show appropriate buttons based on level
         if (this.currentLevel === 'beginner') {
-            startRecordingButton.style.display = 'block';
-            manualAnswerButton.style.display = 'block';
+            if (startRecordingButton) startRecordingButton.style.display = 'block';
+            if (manualAnswerButton) manualAnswerButton.style.display = 'block';
+            console.log('Showing beginner buttons');
         } else {
-            startRecordingButton.style.display = 'block';
+            if (startRecordingButton) startRecordingButton.style.display = 'block';
+            console.log('Showing advanced buttons');
         }
         
         // Show review button for all levels
-        reviewSpeechButton.style.display = 'block';
+        if (reviewSpeechButton) reviewSpeechButton.style.display = 'block';
         
         // Auto-start timer for intermediate and advanced levels
         if (this.currentLevel !== 'beginner') {
             this.startResponseTimer();
-            autoTimer.style.display = 'block';
+            if (autoTimer) autoTimer.style.display = 'block';
         }
+        
+        console.log('showRecordingInterface completed');
     }
     
     startResponseTimer() {
