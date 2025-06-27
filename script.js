@@ -123,53 +123,23 @@ document.addEventListener('DOMContentLoaded', () => {
     mangaApp = new MangaApp();
     gameEngine = new ReverseGameEngine();
     
-    setupModeToggle();
+    switchToGameMode();
 });
 
-function setupModeToggle() {
-    const storyModeBtn = document.getElementById('story-mode');
-    const gameModeBtn = document.getElementById('game-mode');
+function switchToGameMode() {
     const gameUI = document.getElementById('game-ui');
     const tapInstruction = document.getElementById('tap-instruction');
     
-    storyModeBtn.addEventListener('click', () => {
-        switchToStoryMode();
-    });
+    gameUI.style.display = 'block';
+    tapInstruction.style.display = 'none';
+    gameEngine.setGameActive(true);
     
-    gameModeBtn.addEventListener('click', () => {
-        switchToGameMode();
-    });
+    // ゲームモード用のCSSクラスを追加
+    document.body.classList.add('game-mode');
     
-    function switchToStoryMode() {
-        storyModeBtn.classList.add('active');
-        gameModeBtn.classList.remove('active');
-        gameUI.style.display = 'none';
-        tapInstruction.style.display = 'block';
-        gameEngine.setGameActive(false);
-        
-        // ゲームモード用のCSSクラスを削除
-        document.body.classList.remove('game-mode');
-        
-        // Reset speech bubble for story mode
-        const speechText = document.getElementById('speech-text');
-        speechText.style.opacity = '1';
-        speechText.textContent = 'タップして始める';
-    }
-    
-    function switchToGameMode() {
-        gameModeBtn.classList.add('active');
-        storyModeBtn.classList.remove('active');
-        gameUI.style.display = 'block';
-        tapInstruction.style.display = 'none';
-        gameEngine.setGameActive(true);
-        
-        // ゲームモード用のCSSクラスを追加
-        document.body.classList.add('game-mode');
-        
-        // Show level selection instead of starting game directly
-        document.getElementById('level-selection').style.display = 'block';
-        document.getElementById('game-play').style.display = 'none';
-    }
+    // Show level selection instead of starting game directly
+    document.getElementById('level-selection').style.display = 'block';
+    document.getElementById('game-play').style.display = 'none';
 }
 
 document.addEventListener('contextmenu', (e) => e.preventDefault());

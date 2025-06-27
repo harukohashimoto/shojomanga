@@ -10,6 +10,22 @@ const mangaData = {
         },
         {
             id: 3,
+            image: "images/1672188.png"
+        },
+        {
+            id: 4,
+            image: "images/22395268.jpg"
+        },
+        {
+            id: 5,
+            image: "images/23457248.png"
+        },
+        {
+            id: 6,
+            image: "images/24337743.png"
+        },
+        {
+            id: 7,
             image: "images/26469090.jpg"
         }
     ],
