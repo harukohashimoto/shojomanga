@@ -46,7 +46,7 @@ body {
 
 #speech-bubble {
     position: absolute;
-    bottom: 20%;
+    bottom: 35%;
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
@@ -59,7 +59,7 @@ body {
 
 /* ゲームモード時の吹き出し位置調整 */
 .game-mode #speech-bubble {
-    bottom: 65%;
+    bottom: 75%;
 }
 
 #bubble-path {
@@ -101,13 +101,17 @@ body {
     
     #speech-bubble {
         width: 95%;
-        bottom: 15%;
+        bottom: 30%;
     }
 }
 
 @media (max-width: 480px) {
     #speech-text {
         font-size: 21px;
+    }
+    
+    #speech-bubble {
+        bottom: 35%;
     }
     
     #tap-instruction {
@@ -510,7 +514,7 @@ body {
 /* Introduction Screen Styles */
 #introduction-screen {
     position: absolute;
-    bottom: 8%;
+    bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -590,7 +594,7 @@ body {
     }
     
     #introduction-screen {
-        bottom: 6%;
+        bottom: 25%;
     }
 }
 
@@ -602,7 +606,7 @@ body {
     }
     
     #introduction-screen {
-        bottom: 4%;
+        bottom: 30%;
     }
 }
 
