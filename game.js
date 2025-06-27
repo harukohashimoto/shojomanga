@@ -313,6 +313,9 @@ class ReverseGameEngine {
             gamePlay.style.opacity = '1';
         }
         
+        // Update game status for recording phase
+        document.getElementById('game-status').textContent = 'セリフを逆さまに言ってください！';
+        
         // Show only review button, hide all others
         const startRecordingButton = document.getElementById('start-recording');
         const manualAnswerButton = document.getElementById('manual-answer');
