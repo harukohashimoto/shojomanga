@@ -606,6 +606,12 @@ body {
     z-index: 20;
     font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
     animation: titleGlow 2s ease-in-out infinite alternate;
+    white-space: nowrap;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 20px;
+    border-radius: 20px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 @keyframes titleGlow {
