@@ -210,7 +210,7 @@ class ReverseGameEngine {
         
         speechText.style.opacity = '1';
         
-        document.getElementById('game-status').textContent = 'セリフを覚えてください';
+        document.getElementById('game-status').textContent = 'セリフを覚えてね♡';
     }
 
     startTimer() {
@@ -264,7 +264,7 @@ class ReverseGameEngine {
         });
         
         // Update game status
-        document.getElementById('game-status').textContent = 'セリフを逆さまに言ってください！';
+        document.getElementById('game-status').textContent = 'セリフを逆さまに言ってね♡';
         
         // Show appropriate buttons based on level
         if (this.currentLevel === 'beginner') {
@@ -342,7 +342,7 @@ class ReverseGameEngine {
         }
         
         // Update game status for recording phase
-        document.getElementById('game-status').textContent = 'セリフを逆さまに言ってください！';
+        document.getElementById('game-status').textContent = 'セリフを逆さまに言ってね♡';
         
         // Show only review button, hide all others
         const startRecordingButton = document.getElementById('start-recording');
@@ -618,12 +618,12 @@ class ReverseGameEngine {
             // Beginner level: manual response
             document.getElementById('start-recording').style.display = 'block';
             document.getElementById('manual-answer').style.display = 'block';
-            document.getElementById('game-status').textContent = 'セリフを逆さまに言って、「言えました！」を押してください';
+            document.getElementById('game-status').textContent = '逆さまに言って、「言えました！」を押してね♡';
         } else {
             // Intermediate/Advanced: auto timer
             document.getElementById('start-recording').style.display = 'block';
             document.getElementById('auto-timer').style.display = 'block';
-            document.getElementById('game-status').textContent = `セリフを逆さまに言ってください！（${config.timeLimit}秒以内）`;
+            document.getElementById('game-status').textContent = `セリフを逆さまに言ってね♡（${config.timeLimit}秒以内）`;
             this.startResponseTimer(config.timeLimit);
         }
     }
