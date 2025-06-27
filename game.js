@@ -186,8 +186,11 @@ class ReverseGameEngine {
                 clearInterval(this.timer);
                 timerElement.style.display = 'none';
                 this.hideSpeech();
-                startRecordingButton.style.display = 'block';
-                document.getElementById('game-status').textContent = 'セリフを逆さまに言ってください！';
+                
+                // Show recording interface automatically after a short delay
+                setTimeout(() => {
+                    this.showRecordingInterface();
+                }, 500);
             }
         }, 1000);
     }
@@ -198,6 +201,32 @@ class ReverseGameEngine {
         setTimeout(() => {
             speechText.innerHTML = '';
         }, 300);
+    }
+    
+    showRecordingInterface() {
+        const startRecordingButton = document.getElementById('start-recording');
+        const manualAnswerButton = document.getElementById('manual-answer');
+        const reviewSpeechButton = document.getElementById('review-speech');
+        const autoTimer = document.getElementById('auto-timer');
+        
+        // Update game status
+        document.getElementById('game-status').textContent = 'セリフを逆さまに言ってください！';
+        
+        // Show appropriate buttons based on level
+        if (this.currentLevel === 'beginner') {
+            manualAnswerButton.style.display = 'block';
+        } else {
+            startRecordingButton.style.display = 'block';
+        }
+        
+        // Show review button for all levels
+        reviewSpeechButton.style.display = 'block';
+        
+        // Auto-start timer for intermediate and advanced levels
+        if (this.currentLevel !== 'beginner') {
+            this.startResponseTimer();
+            autoTimer.style.display = 'block';
+        }
     }
 
     startRecording() {
