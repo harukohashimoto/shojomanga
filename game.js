@@ -226,21 +226,51 @@ class ReverseGameEngine {
         
         // Show appropriate buttons based on level
         if (this.currentLevel === 'beginner') {
-            if (startRecordingButton) startRecordingButton.style.display = 'block';
-            if (manualAnswerButton) manualAnswerButton.style.display = 'block';
-            console.log('Showing beginner buttons');
+            if (startRecordingButton) {
+                startRecordingButton.style.setProperty('display', 'block', 'important');
+                startRecordingButton.style.setProperty('visibility', 'visible', 'important');
+                startRecordingButton.style.setProperty('opacity', '1', 'important');
+            }
+            if (manualAnswerButton) {
+                manualAnswerButton.style.setProperty('display', 'block', 'important');
+                manualAnswerButton.style.setProperty('visibility', 'visible', 'important');
+                manualAnswerButton.style.setProperty('opacity', '1', 'important');
+            }
+            console.log('Showing beginner buttons with !important');
         } else {
-            if (startRecordingButton) startRecordingButton.style.display = 'block';
-            console.log('Showing advanced buttons');
+            if (startRecordingButton) {
+                startRecordingButton.style.setProperty('display', 'block', 'important');
+                startRecordingButton.style.setProperty('visibility', 'visible', 'important');
+                startRecordingButton.style.setProperty('opacity', '1', 'important');
+            }
+            console.log('Showing advanced buttons with !important');
         }
         
         // Show review button for all levels
-        if (reviewSpeechButton) reviewSpeechButton.style.display = 'block';
+        if (reviewSpeechButton) {
+            reviewSpeechButton.style.setProperty('display', 'block', 'important');
+            reviewSpeechButton.style.setProperty('visibility', 'visible', 'important');
+            reviewSpeechButton.style.setProperty('opacity', '1', 'important');
+        }
         
         // Auto-start timer for intermediate and advanced levels
         if (this.currentLevel !== 'beginner') {
             this.startResponseTimer();
             if (autoTimer) autoTimer.style.display = 'block';
+        }
+        
+        // Ensure game UI container is visible
+        const gameUI = document.getElementById('game-ui');
+        const gamePlay = document.getElementById('game-play');
+        if (gameUI) {
+            gameUI.style.display = 'block';
+            gameUI.style.visibility = 'visible';
+            gameUI.style.opacity = '1';
+        }
+        if (gamePlay) {
+            gamePlay.style.display = 'block';
+            gamePlay.style.visibility = 'visible';
+            gamePlay.style.opacity = '1';
         }
         
         console.log('showRecordingInterface completed');
