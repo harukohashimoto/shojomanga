@@ -642,16 +642,27 @@ class ReverseGameEngine {
             if (remaining <= 0) {
                 clearInterval(this.responseTimer);
                 this.waitingForResponse = false;
-                if (!this.isRecording) {
-                    this.handleTimeout();
+                
+                // 録音中の場合は停止してからタイムアウト処理
+                if (this.isRecording && this.recognition) {
+                    this.recognition.stop();
                 }
+                
+                this.handleTimeout();
             }
         }, 1000);
     }
 
     handleTimeout() {
+        // 録音状態をリセット
+        this.isRecording = false;
+        this.hideRecordingIndicator();
+        
+        // タイマー関連のUIを隠す
         document.getElementById('auto-timer').style.display = 'none';
         document.getElementById('start-recording').style.display = 'none';
+        
+        // 結果画面を表示
         this.showResult(false, '時間切れ');
     }
 
