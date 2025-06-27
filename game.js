@@ -98,6 +98,7 @@ class ReverseGameEngine {
         if (!this.gameActive) return;
         
         this.hideGameResult();
+        this.hideAllGameElements();
         this.currentSpeech = this.generateRandomSpeech();
         this.reversedTarget = this.reverseText(this.currentSpeech);
         
@@ -171,9 +172,8 @@ class ReverseGameEngine {
     }
 
     startTimer() {
-        let countdown = 3;
+        let countdown = this.levelConfig[this.currentLevel].displayTime;
         const timerElement = document.getElementById('game-timer');
-        const startRecordingButton = document.getElementById('start-recording');
         
         timerElement.style.display = 'block';
         timerElement.textContent = countdown;
@@ -188,6 +188,7 @@ class ReverseGameEngine {
                 this.hideSpeech();
                 
                 // Show recording interface automatically after a short delay
+                console.log('Timer ended, showing recording interface in 500ms');
                 setTimeout(() => {
                     this.showRecordingInterface();
                 }, 500);
@@ -204,6 +205,8 @@ class ReverseGameEngine {
     }
     
     showRecordingInterface() {
+        console.log('showRecordingInterface called for level:', this.currentLevel);
+        
         const startRecordingButton = document.getElementById('start-recording');
         const manualAnswerButton = document.getElementById('manual-answer');
         const reviewSpeechButton = document.getElementById('review-speech');
@@ -214,6 +217,7 @@ class ReverseGameEngine {
         
         // Show appropriate buttons based on level
         if (this.currentLevel === 'beginner') {
+            startRecordingButton.style.display = 'block';
             manualAnswerButton.style.display = 'block';
         } else {
             startRecordingButton.style.display = 'block';
