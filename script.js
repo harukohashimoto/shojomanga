@@ -88,12 +88,8 @@ class MangaApp {
             this.selectedIntroBackground = this.getRandomItem(mangaData.introductionBackgrounds);
         }
         
-        this.backgroundElement.style.opacity = '0';
-        
-        setTimeout(() => {
-            this.backgroundElement.style.backgroundImage = `url("${this.selectedIntroBackground.image}")`;
-            this.backgroundElement.style.opacity = '1';
-        }, 250);
+        this.backgroundElement.style.backgroundImage = `url("${this.selectedIntroBackground.image}")`;
+        this.backgroundElement.style.opacity = '1';
     }
     
     updateBackground() {

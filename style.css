@@ -41,7 +41,7 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('images/1644635.png');
+    opacity: 0;
 }
 
 #speech-bubble {
