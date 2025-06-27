@@ -362,7 +362,8 @@ class ReverseGameEngine {
         
         // Show timer for intermediate and advanced levels
         if (this.currentLevel !== 'beginner') {
-            this.startResponseTimer();
+            const config = this.levelConfig[this.currentLevel];
+            this.startResponseTimer(config.timeLimit);
             if (autoTimer) autoTimer.style.display = 'block';
         }
         
@@ -376,27 +377,6 @@ class ReverseGameEngine {
         console.log('startRecordingDirectly completed');
     }
     
-    startResponseTimer() {
-        const config = this.levelConfig[this.currentLevel];
-        if (!config.timeLimit) return;
-        
-        let timeLeft = config.timeLimit;
-        const countdownElement = document.getElementById('countdown');
-        
-        countdownElement.textContent = timeLeft;
-        this.waitingForResponse = true;
-        
-        this.responseTimer = setInterval(() => {
-            timeLeft--;
-            countdownElement.textContent = timeLeft;
-            
-            if (timeLeft <= 0) {
-                clearInterval(this.responseTimer);
-                this.waitingForResponse = false;
-                this.showResult(false, '時間切れ');
-            }
-        }, 1000);
-    }
 
     startRecording() {
         if (!this.recognition || this.isRecording) return;
