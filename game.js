@@ -151,8 +151,20 @@ class ReverseGameEngine {
     }
 
     displaySpeech(speech) {
+        // Show speech bubble for game
+        const speechBubble = document.getElementById('speech-bubble');
+        speechBubble.style.display = 'block';
+        
         const speechText = document.getElementById('speech-text');
-        speechText.textContent = speech;
+        speechText.innerHTML = '';
+        
+        // Create tspan for the speech text
+        const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+        tspan.setAttribute('x', '80');
+        tspan.setAttribute('y', '50');
+        tspan.textContent = speech;
+        speechText.appendChild(tspan);
+        
         speechText.style.opacity = '1';
         
         document.getElementById('game-status').textContent = 'セリフを覚えてください';
@@ -183,6 +195,9 @@ class ReverseGameEngine {
     hideSpeech() {
         const speechText = document.getElementById('speech-text');
         speechText.style.opacity = '0';
+        setTimeout(() => {
+            speechText.innerHTML = '';
+        }, 300);
     }
 
     startRecording() {
