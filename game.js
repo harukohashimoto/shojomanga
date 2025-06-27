@@ -141,13 +141,27 @@ class ReverseGameEngine {
             '涙': 'なみだ', '寝': 'ね', '君': 'きみ', '人': 'ひと', '心': 'こころ',
             '愛': 'あい', '夢': 'ゆめ', '希望': 'きぼう', '笑顔': 'えがお',
             '天使': 'てんし', '星': 'ほし', '花': 'はな', '空': 'そら',
-            '海': 'うみ', '太陽': 'たいよう', '月': 'つき', '光': 'ひかり'
+            '海': 'うみ', '太陽': 'たいよう', '月': 'つき', '光': 'ひかり',
+            // 単体の漢字も追加
+            '石': 'いし', '田': 'た', '山': 'やま', '川': 'かわ', '森': 'もり',
+            '雨': 'あめ', '風': 'かぜ', '雪': 'ゆき', '雲': 'くも', '水': 'みず',
+            '火': 'ひ', '土': 'つち', '木': 'き', '金': 'きん', '銀': 'ぎん',
+            '白': 'しろ', '黒': 'くろ', '赤': 'あか', '青': 'あお', '緑': 'みどり',
+            '手': 'て', '足': 'あし', '目': 'め', '耳': 'みみ', '口': 'くち',
+            '鼻': 'はな', '頭': 'あたま', '顔': 'かお', '体': 'からだ', '声': 'こえ',
+            '石の田': 'いしのた', '田の石': 'たのいし'
         };
 
         let result = text;
+        
+        // 漢字をひらがなに変換
         for (const [kanji, hiragana] of Object.entries(kanjiMap)) {
             result = result.replace(new RegExp(kanji, 'g'), hiragana);
         }
+        
+        // カタカナをひらがなに変換
+        result = this.katakanaToHiragana(result);
+        
         return result;
     }
 
@@ -379,11 +393,15 @@ class ReverseGameEngine {
     }
 
     processRecognitionResult(result) {
-        console.log('認識結果:', result);
+        console.log('認識結果(元):', result);
+        
+        // 漢字をひらがなに変換
+        const hiraganaResult = this.convertToHiragana(result);
+        console.log('認識結果(ひらがな変換後):', hiraganaResult);
         console.log('正解:', this.reversedTarget);
         
-        const isCorrect = this.compareTexts(result, this.reversedTarget);
-        this.showResult(isCorrect, result);
+        const isCorrect = this.compareTexts(hiraganaResult, this.reversedTarget);
+        this.showResult(isCorrect, hiraganaResult);
     }
 
     compareTexts(recognized, target) {
