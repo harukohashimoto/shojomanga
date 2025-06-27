@@ -150,7 +150,16 @@ class MangaApp {
     }
 
     typeWriterMultiLine(lines, lineIndex, charIndex) {
-        if (lineIndex >= lines.length) return;
+        if (lineIndex >= lines.length) {
+            // Check if this is the last introduction text
+            if (this.isIntroduction && this.introductionIndex === mangaData.introductionTexts.length - 1) {
+                // Show start button automatically after a short delay
+                setTimeout(() => {
+                    document.getElementById('start-button').style.display = 'block';
+                }, 1000);
+            }
+            return;
+        }
         
         const currentLine = lines[lineIndex];
         const tspan = this.speechText.children[lineIndex];
@@ -181,9 +190,8 @@ class MangaApp {
             setTimeout(() => {
                 this.speechBubble.classList.remove('fade-in');
             }, 500);
-        } else {
-            document.getElementById('start-button').style.display = 'block';
         }
+        // Button display is now handled in typeWriterMultiLine
     }
 
     showNext() {

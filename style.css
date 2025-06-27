@@ -531,7 +531,7 @@ body {
 /* Introduction Screen Styles */
 #introduction-screen {
     position: absolute;
-    bottom: 15%;
+    bottom: 8%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -571,7 +571,7 @@ body {
     }
     
     #introduction-screen {
-        bottom: 12%;
+        bottom: 6%;
     }
 }
 
@@ -583,7 +583,7 @@ body {
     }
     
     #introduction-screen {
-        bottom: 10%;
+        bottom: 4%;
     }
 }
 
