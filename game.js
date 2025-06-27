@@ -11,7 +11,7 @@ class ReverseGameEngine {
         this.waitingForResponse = false;
         
         this.levelConfig = {
-            beginner: { timeLimit: null, displayTime: 3, name: '🌟 初心者' },
+            beginner: { timeLimit: null, displayTime: 3, name: '🌟 初級' },
             intermediate: { timeLimit: 10, displayTime: 3, name: '⭐⭐ 中級' },
             advanced: { timeLimit: 5, displayTime: 3, name: '⭐⭐⭐ 上級' }
         };
@@ -63,17 +63,14 @@ class ReverseGameEngine {
     }
 
     setupEventListeners() {
-        // Level selection
+        // Level selection - directly start game when level is clicked
         document.querySelectorAll('.level-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
                 this.currentLevel = e.target.dataset.level;
+                this.showGamePlay();
             });
-        });
-
-        document.getElementById('start-game').addEventListener('click', () => {
-            this.showGamePlay();
         });
 
         document.getElementById('start-recording').addEventListener('click', () => {
