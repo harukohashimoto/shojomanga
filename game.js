@@ -385,24 +385,12 @@ class ReverseGameEngine {
 
     showRecordingIndicator() {
         document.getElementById('recording-indicator').style.display = 'block';
-        document.getElementById('game-status').textContent = '録音中...';
     }
 
     hideRecordingIndicator() {
         document.getElementById('recording-indicator').style.display = 'none';
     }
 
-    processRecognitionResult(result) {
-        console.log('認識結果(元):', result);
-        
-        // 漢字をひらがなに変換
-        const hiraganaResult = this.convertToHiragana(result);
-        console.log('認識結果(ひらがな変換後):', hiraganaResult);
-        console.log('正解:', this.reversedTarget);
-        
-        const isCorrect = this.compareTexts(hiraganaResult, this.reversedTarget);
-        this.showResult(isCorrect, hiraganaResult);
-    }
 
     compareTexts(recognized, target) {
         const normalizeText = (text) => {
@@ -536,9 +524,6 @@ class ReverseGameEngine {
         document.getElementById('level-selection').style.display = 'none';
         document.getElementById('game-play').style.display = 'block';
         
-        const levelDisplay = document.getElementById('current-level-display');
-        levelDisplay.textContent = `現在のレベル: ${this.levelConfig[this.currentLevel].name}`;
-        
         setTimeout(() => {
             this.startNewGame();
         }, 500);
@@ -567,6 +552,7 @@ class ReverseGameEngine {
         document.getElementById('review-speech').style.display = 'none';
         document.getElementById('game-result').style.display = 'none';
         document.getElementById('result-buttons').style.display = 'none';
+        document.getElementById('game-status').textContent = '';
     }
 
     showLevelSpecificControls() {
@@ -618,7 +604,15 @@ class ReverseGameEngine {
 
     reviewSpeech() {
         const speechText = document.getElementById('speech-text');
-        speechText.textContent = this.currentSpeech;
+        speechText.innerHTML = '';
+        
+        // Create tspan for the speech text
+        const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+        tspan.setAttribute('x', '80');
+        tspan.setAttribute('y', '50');
+        tspan.textContent = this.currentSpeech;
+        speechText.appendChild(tspan);
+        
         speechText.style.opacity = '1';
         
         setTimeout(() => {
@@ -632,13 +626,6 @@ class ReverseGameEngine {
         }
     }
 
-    startRecording() {
-        if (!this.recognition || this.isRecording) return;
-        
-        document.getElementById('start-recording').style.display = 'none';
-        document.getElementById('manual-answer').style.display = 'none';
-        this.recognition.start();
-    }
 
     processRecognitionResult(result) {
         console.log('認識結果:', result);
@@ -665,6 +652,11 @@ class ReverseGameEngine {
     showResult(isCorrect, recognizedText) {
         const resultElement = document.getElementById('game-result');
         const resultButtons = document.getElementById('result-buttons');
+        
+        // Hide recording indicator and review button in result screen
+        document.getElementById('recording-indicator').style.display = 'none';
+        document.getElementById('review-speech').style.display = 'none';
+        document.getElementById('game-status').textContent = '';
         
         let resultHTML = `
             <div class="result-content ${isCorrect ? 'correct' : 'incorrect'}">
