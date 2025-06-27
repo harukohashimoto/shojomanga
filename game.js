@@ -188,11 +188,11 @@ class ReverseGameEngine {
                 timerElement.style.display = 'none';
                 this.hideSpeech();
                 
-                // Show recording interface automatically after a short delay
-                console.log('Timer ended, showing recording interface in 500ms');
+                // Start recording directly without showing buttons first
+                console.log('Timer ended, starting recording directly in 500ms');
                 setTimeout(() => {
-                    console.log('About to call showRecordingInterface');
-                    this.showRecordingInterface();
+                    console.log('About to start recording directly');
+                    this.startRecordingDirectly();
                 }, 500);
             }
         }, 1000);
@@ -280,6 +280,55 @@ class ReverseGameEngine {
         }, 1000);
         
         console.log('showRecordingInterface completed');
+    }
+    
+    startRecordingDirectly() {
+        console.log('startRecordingDirectly called for level:', this.currentLevel);
+        
+        // Ensure game UI container is visible
+        const gameUI = document.getElementById('game-ui');
+        const gamePlay = document.getElementById('game-play');
+        if (gameUI) {
+            gameUI.style.display = 'block';
+            gameUI.style.visibility = 'visible';
+            gameUI.style.opacity = '1';
+        }
+        if (gamePlay) {
+            gamePlay.style.display = 'block';
+            gamePlay.style.visibility = 'visible';
+            gamePlay.style.opacity = '1';
+        }
+        
+        // Show only review button, hide all others
+        const startRecordingButton = document.getElementById('start-recording');
+        const manualAnswerButton = document.getElementById('manual-answer');
+        const reviewSpeechButton = document.getElementById('review-speech');
+        const autoTimer = document.getElementById('auto-timer');
+        
+        if (startRecordingButton) startRecordingButton.style.display = 'none';
+        if (manualAnswerButton) manualAnswerButton.style.display = 'none';
+        
+        // Show review button
+        if (reviewSpeechButton) {
+            reviewSpeechButton.style.setProperty('display', 'block', 'important');
+            reviewSpeechButton.style.setProperty('visibility', 'visible', 'important');
+            reviewSpeechButton.style.setProperty('opacity', '1', 'important');
+        }
+        
+        // Show timer for intermediate and advanced levels
+        if (this.currentLevel !== 'beginner') {
+            this.startResponseTimer();
+            if (autoTimer) autoTimer.style.display = 'block';
+        }
+        
+        // Start recording immediately
+        if (this.recognition && !this.isRecording) {
+            console.log('Starting recording directly...');
+            this.showRecordingIndicator();
+            this.recognition.start();
+        }
+        
+        console.log('startRecordingDirectly completed');
     }
     
     startResponseTimer() {
