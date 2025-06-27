@@ -228,6 +228,28 @@ class ReverseGameEngine {
             autoTimer.style.display = 'block';
         }
     }
+    
+    startResponseTimer() {
+        const config = this.levelConfig[this.currentLevel];
+        if (!config.timeLimit) return;
+        
+        let timeLeft = config.timeLimit;
+        const countdownElement = document.getElementById('countdown');
+        
+        countdownElement.textContent = timeLeft;
+        this.waitingForResponse = true;
+        
+        this.responseTimer = setInterval(() => {
+            timeLeft--;
+            countdownElement.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(this.responseTimer);
+                this.waitingForResponse = false;
+                this.showResult(false, '時間切れ');
+            }
+        }, 1000);
+    }
 
     startRecording() {
         if (!this.recognition || this.isRecording) return;
@@ -416,26 +438,6 @@ class ReverseGameEngine {
         document.getElementById('review-speech').style.display = 'none';
         document.getElementById('game-result').style.display = 'none';
         document.getElementById('result-buttons').style.display = 'none';
-    }
-
-    startTimer() {
-        let countdown = this.levelConfig[this.currentLevel].displayTime;
-        const timerElement = document.getElementById('game-timer');
-        
-        timerElement.style.display = 'block';
-        timerElement.textContent = countdown;
-        
-        this.timer = setInterval(() => {
-            countdown--;
-            timerElement.textContent = countdown;
-            
-            if (countdown <= 0) {
-                clearInterval(this.timer);
-                timerElement.style.display = 'none';
-                this.hideSpeech();
-                this.showLevelSpecificControls();
-            }
-        }, 1000);
     }
 
     showLevelSpecificControls() {
