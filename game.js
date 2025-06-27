@@ -273,6 +273,12 @@ class ReverseGameEngine {
             gamePlay.style.opacity = '1';
         }
         
+        // Auto-start recording after showing interface
+        setTimeout(() => {
+            console.log('Auto-starting recording...');
+            this.startRecording();
+        }, 1000);
+        
         console.log('showRecordingInterface completed');
     }
     
@@ -301,7 +307,16 @@ class ReverseGameEngine {
     startRecording() {
         if (!this.recognition || this.isRecording) return;
         
+        console.log('Starting recording...');
+        
+        // Hide all buttons except review
         document.getElementById('start-recording').style.display = 'none';
+        document.getElementById('manual-answer').style.display = 'none';
+        
+        // Show recording indicator
+        this.showRecordingIndicator();
+        
+        // Start the actual recording
         this.recognition.start();
     }
 
