@@ -607,11 +607,49 @@ body {
     font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
     animation: titleGlow 2s ease-in-out infinite alternate;
     white-space: nowrap;
-    background: rgba(255, 255, 255, 0.8);
-    padding: 10px 20px;
-    border-radius: 20px;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 240, 245, 0.95) 50%,
+        rgba(255, 182, 193, 0.9) 100%);
+    padding: 15px 30px;
+    border-radius: 30px;
+    backdrop-filter: blur(10px);
+    box-shadow: 
+        0 8px 32px rgba(255, 105, 180, 0.3),
+        inset 0 2px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -2px 0 rgba(255, 20, 147, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    position: relative;
+    overflow: visible;
+}
+
+#app-title::before {
+    content: '✨';
+    position: absolute;
+    left: -15px;
+    top: -10px;
+    font-size: 24px;
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+#app-title::after {
+    content: '✨';
+    position: absolute;
+    right: -15px;
+    bottom: -10px;
+    font-size: 20px;
+    animation: sparkle 1.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2) rotate(180deg);
+    }
 }
 
 @keyframes titleGlow {
